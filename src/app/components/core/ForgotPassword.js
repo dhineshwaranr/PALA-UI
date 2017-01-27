@@ -1,10 +1,11 @@
+
 import React from "react";
 
-export class Login extends  React.Component {
+export class ForgotPassword extends  React.Component {
     render() {
         return (
             <div>
-                <h1>Login</h1>
+                <h3>ForgotPassword</h3>
             </div>
         );
     }

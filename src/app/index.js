@@ -1,26 +1,46 @@
 import React from "react";
 import { render } from "react-dom";
-import { Router, Route, browserHistory, IndexRoute } from "react-router";
+import { Router, Route, browserHistory, IndexRoute, Redirect } from "react-router";
 
-import {Root} from "../app/Root"
+import { Root } from "../app/Root";
 import { Dashboard } from "./components/core/Dashboard";
-import { User } from "./components/user/User";
-import {Login} from "./components/core/Login";
-//https://github.com/reactjs/react-router-tutorial/tree/master/lessons
+import { LeaveApply } from "./components/leaves/LeaveApply";
+import { Login } from "./components/Login";
+import {Ajax} from "./components/helpers/Ajax_Helpers";
+import {ForgotPassword} from "./components/core/ForgotPassword";
 
+//https://github.com/reactjs/react-router-tutorial/tree/master/lessons
 class App extends React.Component {
     render() {
         return(
             <Router history={browserHistory}>
-            <Route path={"/"} component={Login}>
-            <IndexRoute component={Dashboard} />
-            <Route  path={"dashboard"} component={Dashboard}/>
-            <Route path={"user"} component={User}/>
-            <Route path={"user/:id"} component={User}/>
-            </Route>
-            <Route path={"users"} component={User}/>
+                <Redirect from='/portal' to='/portal/dashboard' />
+                <Route path="/" component={Login} />
+                <Route path="portal" component={Root}>
+                    <Route path="dashboard" component={Dashboard}/>
+                    <Route path="leave-apply" component={LeaveApply} />
+                </Route>
+                <Route path={"users"} component={LeaveApply}/>
+                <Route path={"forgot-password"} component={ForgotPassword} />
+                <Route path={"logout"} />
             </Router>
     );
+    }
+}
+
+browserHistory.listen(function(ev) {
+    if(!(!!localStorage.getItem('pala_token'))) {
+    }
+    //console.log('listen', ev.pathname);
+});
+
+function requireAuth(nextState, replace) {
+    debugger
+    if (!Ajax.loggedIn()) {
+        replace({
+            pathname: '/login',
+            state: { nextPathname: nextState.location.pathname }
+        })
     }
 }
 
