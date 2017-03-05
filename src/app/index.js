@@ -8,6 +8,7 @@ import { LeaveApply } from "./components/leaves/LeaveApply";
 import { Login } from "./components/Login";
 import {Ajax} from "./components/helpers/Ajax_Helpers";
 import {ForgotPassword} from "./components/core/ForgotPassword";
+import {LeaveTypes} from "./components/leaves/LeaveTypes";
 
 //https://github.com/reactjs/react-router-tutorial/tree/master/lessons
 class App extends React.Component {
@@ -18,7 +19,10 @@ class App extends React.Component {
                 <Route path="/" component={Login} />
                 <Route path="portal" component={Root}>
                     <Route path="dashboard" component={Dashboard}/>
+                </Route>
+                <Route path="leaves" component={Root}>
                     <Route path="leave-apply" component={LeaveApply} />
+                    <Route path="leave-types" component={LeaveTypes} />
                 </Route>
                 <Route path={"users"} component={LeaveApply}/>
                 <Route path={"forgot-password"} component={ForgotPassword} />

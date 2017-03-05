@@ -8,18 +8,42 @@ import DOM from "../components/helpers/DOM_Helpers";
 
 export class Login extends  React.Component {
 
+    constructor() {
+        super()
+        this.state={
+            username:'',
+            password:''
+        };
+    }
+
+
+    onLoginHandler(e) {
+        this.setState({
+            [e.currentTarget.name] : e.currentTarget.value
+        });
+    }
+
     doLogin(event) {
         var _router = this.context.router;
+        var _this = this;
         event.preventDefault();
         var data = {};
-        data.username = "admin";
-        data.password = "admin";
-        var login = Ajax.postCall(URL.apiAuth, data);
+        debugger
+        data.username = this.state.username;
+        data.password = this.state.password;
+        var login = Ajax.login(URL.apiAuth, data);
         login.done(function(obj) {
             localStorage.setItem("pala_token",obj.token);
+            var currentUser = Ajax.getCall(URL.profile);
+            currentUser.done(function(obj){
+                localStorage.setItem("pala_current_user",JSON.stringify(obj));
+            }).fail(function(obj){
+
+            });
             browserHistory.push('/portal');
             DOM.alert($("#success"), "Welcome! Login Successfull")
         }).fail(function(obj) {
+            debugger
             var message = obj.responseJSON.message;
             DOM.alert($("#failed"), message)
         })
@@ -31,28 +55,20 @@ export class Login extends  React.Component {
 
     render() {
         return (
-            <div className="loginPanel">
-                    <div role="alert" className="alert alert-danger alert-top" id="failed">
-                        <span className="alert-msg"></span>
+            <div className="row">
+                <div className="Absolute-Center is-Responsive">
+                    <div className="loginDiv">
+                        <div className="form-group">
+                            <input type="text" className="form-control" name="username" id="userName" placeholder="User Name" onChange={(event) => this.onLoginHandler(event)}/>
+                        </div>
+                        <div id="logo-container"></div>
+                        <div className="form-group">
+                            <input type="password" className="form-control" name="password" id="password" placeholder="Password" onChange={(event) => this.onLoginHandler(event)}/>
+                        </div>
+
                     </div>
-                    <div className="alert alert-info alert-top" id="info">
-                        <span className="alert-msg"></span>
-                    </div>
-                <div className="row">
-                    <div className="col-lg-4 col-sm-4 col-md-4 col-xs-12">
-                        <form className="loginForm" id="loginForm">
-                            <div className="form-group">
-                                <label htmlFor="exampleInputEmail1">User Name</label>
-                                <input type="text" className="form-control" id="userName" placeholder="User Name" />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="exampleInputPassword1">Password</label>
-                                <input type="password" className="form-control" id="password" placeholder="Password" />
-                            </div>
-                            <input type="button" className="btn btn-default col-lg-4 col-sm-4 col-md-4 col-xs-5" value="Submit" onClick={() => this.doLogin(event)} />
-                            <input type="button" className="btn btn-default col-lg-4 col-sm-4 col-md-4 col-xs-5" value="Forgot Password" onClick={() => this.forgotPassword()} />
-                        </form>
-                    </div>
+                    <input type="button" className="btn btn-default col-lg-4 col-sm-4 col-md-4 col-xs-5" value="Submit" onClick={() => this.doLogin(event)} />
+                    <input type="button" className="btn btn-default col-lg-4 col-sm-4 col-md-4 col-xs-5" value="Forgot Password" onClick={() => this.forgotPassword()} />
                 </div>
             </div>
         );

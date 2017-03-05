@@ -1,5 +1,7 @@
 import React from "react";
 
+import {Link} from "react-router";
+
 export class SideNavigation extends  React.Component {
     render() {
         return (
@@ -28,7 +30,7 @@ export class SideNavigation extends  React.Component {
                                     <li><a href="#">Informes</a></li>
                                 </ul>
                             </li>
-                            <li ><a href="#">Libros<span className="pull-right hidden-xs showopacity glyphicon glyphicon-th-list"></span></a></li>
+                            <li ><Link to={"/leaves/leave-types"}>Leave Managemet<span className="pull-right hidden-xs showopacity glyphicon glyphicon-th-list"></span></Link></li>
                             <li ><a href="#">Tags<span className="pull-right hidden-xs showopacity glyphicon glyphicon-tags"></span></a></li>
                         </ul>
                     </div>

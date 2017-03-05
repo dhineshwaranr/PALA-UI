@@ -21,7 +21,7 @@ export class Header extends React.Component{
                                 <Link to={"/portal/dashboard"} activeStyle={{color:"red"}}>Dashboard</Link>
                             </li>
                             <li>
-                                <Link to={"/portal/leave-apply"} activeClassName={"active"}><span className="glyphicon glyphicon-user"></span></Link>
+                                <Link to={"/leaves/leave-apply"} activeClassName={"active"}><span className="glyphicon glyphicon-user"></span></Link>
                             </li>
                             <li>
                                 <Link to={"/portal/user/10"} activeClassName={"active"}>User Id</Link>

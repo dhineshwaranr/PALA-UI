@@ -16,6 +16,15 @@ export class Root extends React.Component {
                         <SideNavigation />
                     </div>
                     <div className="col-lg-11">
+                        <div role="alert" className="alert alert-success alert-top" id="success">
+                            <span className="alert-msg"></span>
+                        </div>
+                        <div role="alert" className="alert alert-danger alert-top" id="failed">
+                            <span className="alert-msg"></span>
+                        </div>
+                        <div className="alert alert-info alert-top" id="info">
+                            <span className="alert-msg"></span>
+                        </div>
                         {this.props.children}
                     </div>
                 </div>
